@@ -68,6 +68,8 @@ class imgProcess:
         with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
             for root, dirs, files in os.walk(self.EDIT_FOLDER):
                         for file in files:
+                                if file == 'temp.txt':
+                                    continue
                                 zipf.write(os.path.join(root, file))
         memory_file.seek(0)
         files = glob.glob(f'{self.UPLOAD_FOLDER}/*')
