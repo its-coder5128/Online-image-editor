@@ -41,7 +41,9 @@ class imgProcess:
     def operateOnImage(self):
         actions = self.operation
         for f in os.listdir(os.path.join(self.UPLOAD_FOLDER)):
-            with Image.open(f'./upload/{f}') as im:
+            if f == 'temp.txt':
+                continue
+            with Image.open(f'{self.UPLOAD_FOLDER}/{f}') as im:
                 for action in actions:
                     if action == "Square":
                         size = (1920, 1920)
@@ -70,9 +72,13 @@ class imgProcess:
         memory_file.seek(0)
         files = glob.glob(f'{self.UPLOAD_FOLDER}/*')
         for f in files:
+            if f == f'{self.UPLOAD_FOLDER}\\temp.txt':
+                continue
             os.remove(f)
         files = glob.glob(f'{self.EDIT_FOLDER}/*')
         for f in files:
+            if f == f'{self.EDIT_FOLDER}\\temp.txt':
+                continue
             os.remove(f)
         
         return memory_file

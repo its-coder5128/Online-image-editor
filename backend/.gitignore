@@ -1,5 +1,5 @@
 .flaskenv
 .env
 __pycache__
-uploads
-edited
+# uploads
+# edited
