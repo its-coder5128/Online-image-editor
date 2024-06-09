@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import loader from './assets/loader.gif'
 
 const api_url = process.env.REACT_APP_URL;
 
@@ -16,8 +17,9 @@ function App() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [showProgressBar, setShowProgressBar] = useState(false);
   const [error, setError] = useState("");
-  const [previewImages,setPreviewImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
   const [dragOver, setDragOver] = useState(false);
+  const [loading,setLoading] = useState(false);
   const inputRef = useRef(null);
 
   function handleMultipleChange(event) {
@@ -52,9 +54,11 @@ function App() {
     event.preventDefault();
     setShowProgressBar(true);
     setError("");
+    setLoading(true);
 
     if (files.length === 0) {
       setError("No files selected for upload.");
+      setLoading(false);
       setShowProgressBar(false);
       return;
     }
@@ -97,7 +101,6 @@ function App() {
 
     axios.post(url, formData, config)
       .then((response) => {
-        console.log(response.data);
         var blob = new Blob([response.data], { type: "application/zip" });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -109,6 +112,7 @@ function App() {
         link.parentNode.removeChild(link);
 
         setShowProgressBar(false);
+        setLoading(false)
         setActions({
           Square: false,
           sharp: 0,
@@ -127,6 +131,7 @@ function App() {
         }
       });
   }
+
   function handleDragOver(event) {
     event.preventDefault();
     setDragOver(true);
@@ -147,7 +152,7 @@ function App() {
     setPreviewImages(imagesArray);
   }
 
-  function handleDivClick(){
+  function handleDivClick() {
     inputRef.current.click();
   }
 
@@ -158,12 +163,15 @@ function App() {
           <h1>ONLINE IMAGE EDITOR</h1>
           <div onClick={handleDivClick} className={`dropzone ${dragOver ? 'dragover' : ''}`}>
             <input type="file" multiple onChange={handleMultipleChange} ref={inputRef} hidden />
-            {previewImages.length > 0 ? (<div className='preview'>
-              {previewImages.map((image, index) => (
-                <img className='prevImages' key={index} src={image} alt={`Preview ${index}`} style={{ maxWidth: '100px', margin: '5px' }} />
-              ))}
-            </div>) :
-            (<p>Drag & Drop files here or click to select</p>)}
+            {previewImages.length > 0 ? (
+              <div className='preview'>
+                {previewImages.map((image, index) => (
+                  <img className='prevImages' key={index} src={image} alt={`Preview ${index}`} style={{ maxWidth: '100px', margin: '5px' }} />
+                ))}
+              </div>
+            ) : (
+              <p>Drag & Drop files here or click to select</p>
+            )}
           </div>
           <div>
             <div className="actions-container">
@@ -223,10 +231,16 @@ function App() {
               <span>{actions.contrast}</span>
             </label>
           </div>
-          <button type="submit">Upload</button>
+          {loading ? 
+          ( <div className='loading'>
+              <span>LOADING</span>
+              <img className='loader' key={new Date()} src={loader} alt="loader" style={{ maxWidth: '20px', margin: '0px'}} /> 
+            </div>) : (<button type="submit">UPLOAD</button>)}
         </form>
-        {showProgressBar ? <progress value={uploadProgress} max="100"></progress> : null}
-        {error && <p className='error-message '>Error uploading file: {error}</p>}
+        <div style={{ height: '10px'}}>
+          {showProgressBar ? <progress value={uploadProgress} max="100"></progress> : null}
+          {error && <p className='error-message'>Error uploading file: {error}</p>}
+        </div>   
       </div>
     </div>
   );

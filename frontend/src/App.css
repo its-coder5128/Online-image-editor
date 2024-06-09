@@ -17,7 +17,7 @@ body {
 }
 
 .App {
-  width: 700px;
+  width: 650px;
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
@@ -99,6 +99,23 @@ input[type="file"] {
   margin-bottom: 10px;
 }
 
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* width: 100%; */
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #0056b3;
+    color: #fff;
+    font-size: larger;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 button[type="submit"] {
   display: block;
   width: 100%;
@@ -106,6 +123,7 @@ button[type="submit"] {
   margin-top: 20px;
   background-color: #007bff;
   color: #fff;
+  font-size: larger;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -146,4 +164,51 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
   background-color: rgb(23, 101, 170);
   border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media (max-width: 720px)
+{
+  .App{
+    width: 400px;
+    
+  }
+}
+@media (max-width: 480px) {
+  .App {
+    width: 300px;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .dropzone {
+    padding: 10px;
+  }
+
+  .dropzone p {
+    font-size: medium;
+  }
+
+  /* .actions-container {
+    flex-direction: column;
+  } */
+
+  label {
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 8px;
+  }
 }
