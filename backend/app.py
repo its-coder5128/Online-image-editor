@@ -18,6 +18,9 @@ CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['EDIT_FOLDER'] = EDIT_FOLDER
 
+@app.route('/', methods=['GET'])
+def BaseURL():
+    return "GET YOUR IMAGES EDITED GO TO https://online-image-editor-two.vercel.app/"
 
 @app.route('/uploadFiles', methods=['POST'])
 def upload_file():
