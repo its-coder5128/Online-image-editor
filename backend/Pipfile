@@ -6,10 +6,9 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-cors = "*"
-zipstream-new = "*"
 pillow = "*"
-python-resize-image = "*"
 python-dotenv = "*"
+gunicorn = "*"
 
 [dev-packages]
 
