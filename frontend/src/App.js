@@ -2,6 +2,8 @@ import './App.css';
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
 
+const api_url = process.env.REACT_APP_URL;
+
 function App() {
   const [files, setFiles] = useState([]);
   const [actions, setActions] = useState({
@@ -57,7 +59,7 @@ function App() {
       return;
     }
 
-    const url = 'http://localhost:5000/uploadFiles';
+    const url = api_url;
     const formData = new FormData();
     files.forEach((file, index) => {
       formData.append(`file${index}`, file);

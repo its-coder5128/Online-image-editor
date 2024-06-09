@@ -2,11 +2,14 @@ import os
 from flask import Flask, request, send_file
 from flask_cors import CORS
 from imgProcess import imgProcess
+from dotenv import load_dotenv
 
-UPLOAD_FOLDER = './upload'
+load_dotenv()
+
+UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER_DIR')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-EDIT_FOLDER = './Edited'
+EDIT_FOLDER = os.getenv('EDIT_FOLDER_DIR')
 if not os.path.exists(EDIT_FOLDER):
     os.makedirs(EDIT_FOLDER)
 

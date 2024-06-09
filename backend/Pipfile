@@ -9,6 +9,7 @@ flask-cors = "*"
 zipstream-new = "*"
 pillow = "*"
 python-resize-image = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
