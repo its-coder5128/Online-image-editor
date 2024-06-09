@@ -158,12 +158,12 @@ function App() {
           <h1>ONLINE IMAGE EDITOR</h1>
           <div onClick={handleDivClick} className={`dropzone ${dragOver ? 'dragover' : ''}`}>
             <input type="file" multiple onChange={handleMultipleChange} ref={inputRef} hidden />
-            <div className='preview'>
+            {previewImages.length > 0 ? (<div className='preview'>
               {previewImages.map((image, index) => (
-                <img key={index} src={image} alt={`Preview ${index}`} style={{ maxWidth: '100px', margin: '5px' }} />
+                <img className='prevImages' key={index} src={image} alt={`Preview ${index}`} style={{ maxWidth: '100px', margin: '5px' }} />
               ))}
-            </div>
-            <p>Drag & Drop files here or click to select</p>
+            </div>) :
+            (<p>Drag & Drop files here or click to select</p>)}
           </div>
           <div>
             <div className="actions-container">
