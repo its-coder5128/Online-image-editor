@@ -23,6 +23,42 @@ function App() {
   const inputRef = useRef(null);
 
   useEffect(() => {
+    const url = api_url;
+    const formData = new FormData();
+    files.forEach((file, index) => {
+      formData.append(`file${index}`, file);
+    });
+
+    Object.keys(actions).forEach(action => {
+      if (action !== 'contrast' && action !== 'sharp' && action !== 'bright' && actions[action]) {
+        formData.append('actions', action);
+      }
+    });
+
+    if (actions.contrast > 0) {
+      formData.append('actions', 'contrast');
+      formData.append('contrast_value', actions.contrast);
+    }
+    if (actions.sharp > 0) {
+      formData.append('actions', 'sharp');
+      formData.append('sharp_value', actions.sharp);
+    }
+    if (actions.bright > 0) {
+      formData.append('actions', 'bright');
+      formData.append('bright_value', actions.bright);
+    }
+
+    const config = {
+      responseType: 'arraybuffer',
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+      onUploadProgress: function (progressEvent) {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadProgress(percentCompleted);
+      },
+    };
+
      axios.post(url, formData, config)
       .then((response) => {
         console.log(response)
