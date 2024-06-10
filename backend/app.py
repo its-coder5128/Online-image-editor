@@ -28,6 +28,9 @@ def upload_file():
     allFiles = request.files
     actions = request.form
 
+    if len(allFiles) == 0:
+        return "no file"
+
     fileHandler = imgProcess(allFiles,actions,app.config['UPLOAD_FOLDER'],app.config['EDIT_FOLDER'])
 
     fileHandler.validate()

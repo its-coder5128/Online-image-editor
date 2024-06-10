@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import loader from './assets/loader.gif'
 
@@ -21,6 +21,16 @@ function App() {
   const [dragOver, setDragOver] = useState(false);
   const [loading,setLoading] = useState(false);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+     axios.post(url, formData, config)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },[])
 
   function handleMultipleChange(event) {
     setError("");
