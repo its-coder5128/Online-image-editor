@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from imgProcess import imgProcess
 from dotenv import load_dotenv
@@ -33,7 +33,10 @@ def upload_file():
 
     fileHandler = imgProcess(allFiles,actions,app.config['UPLOAD_FOLDER'],app.config['EDIT_FOLDER'])
 
-    fileHandler.validate()
+    isValid = fileHandler.validate()
+
+    if isValid == False:
+        return jsonify({'error': 'File type not allowed'}), 400
     
     fileHandler.operateOnImage()
     

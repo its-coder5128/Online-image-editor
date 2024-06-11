@@ -2,7 +2,6 @@ import os
 import glob
 import zipfile
 from io import BytesIO
-from flask import jsonify
 from PIL import Image, ImageOps, ImageEnhance
 from werkzeug.utils import secure_filename
 
@@ -24,8 +23,6 @@ class imgProcess:
         allFiles = self.allfiles
         for data in allFiles:
             file = allFiles[data]
-            if file.filename == '':
-                return jsonify({'error': 'No selected file'}), 400
 
             if file and self.allowed_file(file.filename):
                 filename = secure_filename(file.filename)
@@ -35,8 +32,8 @@ class imgProcess:
                 files = glob.glob(f'{self.UPLOAD_FOLDER}/*')
                 for f in files:
                     os.remove(f)
-                return jsonify({'error': 'File type not allowed'}), 400
-        return
+                return False
+        return True
 
     def operateOnImage(self):
         actions = self.operation
