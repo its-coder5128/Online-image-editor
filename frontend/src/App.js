@@ -166,9 +166,17 @@ function App() {
           BNW: false,
           contrast: 0
         });
-      })
-      .catch((error) => {
-        setShowProgressBar(false);
+        })
+        .catch((error) => {
+          setShowProgressBar(false);
+          setLoading(false)
+          setActions({
+            Square: false,
+            sharp: 0,
+            bright: 0,
+            BNW: false,
+            contrast: 0
+          });
         if (error.response && error.response.data) {
           const errorMessage = parseErrorResponse(error.response.data);
           setError(errorMessage);
